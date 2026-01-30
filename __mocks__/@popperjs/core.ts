@@ -1,15 +1,13 @@
-const mock = () => {
-    const PopperJS = jest.requireActual('@popperjs/core');
-    return {
-        placements: PopperJS.placements,
-        destroy: () => {},
-        scheduleUpdate: () => {},
-        forceUpdate: () => {},
-        render: function (this: any) {
-            return this.$options._renderChildren;
-        },
-    };
-};
+// __mocks__/@popperjs/core.ts
+const actual = jest.requireActual('@popperjs/core');
 
-export default mock;
-export { mock as createPopper };
+const createPopper = jest.fn(() => ({
+  state: {},
+  destroy: jest.fn(),
+  update: jest.fn(),
+  forceUpdate: jest.fn(),
+}));
+
+export const placements = actual.placements;
+export { createPopper };
+export default { createPopper, placements };
